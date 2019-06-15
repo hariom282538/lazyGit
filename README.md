@@ -8,7 +8,7 @@ This is the tool I use for pushing code to git repos. Please take a look! I assu
 
 Add, commit and push, Three mostly used commands by me when I made any change in any file but running these commands every time especially when you're working on multiple projects is completely waste of time. So, I started with a small script comprises these three commands and added more features whenever required. 
 
-Case-1 Push new project 
+## Case-1 Push new project 
 
 ```bash
 HARIOM-MAC:lazyGit HARIOM$ lazygit init
@@ -33,7 +33,7 @@ To github.com:hariom282538/lazyGit.git
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 ```
 
-Case-2 Update existing project
+## Case-2 Update existing project
 
 ```bash
 HARIOM-MAC:lazyGit HARIOM$ lazygit adding stuff
@@ -64,7 +64,7 @@ To github.com:hariom282538/lazyGit.git
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 ```
 
-### How to run
+# How to run
 
 Run this (supports linux/mac only):
 
