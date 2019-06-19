@@ -82,7 +82,7 @@ function lazygit() {
             git push -u origin master
             return
             ;;
-        [Nn]*) exit ;;
+        [Nn]*) return ;;
         *) echo "Please answer yes or no." ;;
         esac
     fi
