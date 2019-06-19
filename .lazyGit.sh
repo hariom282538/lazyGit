@@ -23,7 +23,7 @@ function lazygit() {
         echo "2. New Branch"
         read -p "Please select an option [1/2]: " branchOption
         case $branchOption in
-        [1/e]*)
+        1|e*|E*)
 
             echo "Loading all local and remote branches..."
             selectedBranch=$(git branch -a | tr -s '*' ' ' | tr -d "[:blank:]" | cut -d/ -f3 | sort -u | select_from_list)
@@ -43,13 +43,13 @@ function lazygit() {
                 echo "Cancelled!"
             fi
 
-            break
+            return
             ;;
-        [2/n]*)
+        [2|n*|N]*)
             read -p "Enter branch name: " newBranch
             git checkout -b $newBranch
             git push -u origin $newBranch
-            break
+            return
             ;;
         *) echo "Please answer 1 or 2." ;;
         esac
@@ -80,7 +80,7 @@ function lazygit() {
             git add .
             git commit --allow-empty -a -m "$*"
             git push -u origin master
-            break
+            return
             ;;
         [Nn]*) exit ;;
         *) echo "Please answer yes or no." ;;
