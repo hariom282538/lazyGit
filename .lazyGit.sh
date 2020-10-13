@@ -10,9 +10,9 @@ function lazygit() {
             echo "No global git configuartion found on this system"
             # steps for adding user details
             git config --global credential.helper store
-            read -p "Enter your git name:  " gitName
+            read -r "Enter your git name:  " gitName
             git config --global --add user.name $gitName
-            read -p "Enter your git email: " gitEmail
+            read -r "Enter your git email: " gitEmail
             git config --global --add user.email $gitEmail
         fi
         git add .
@@ -21,7 +21,7 @@ function lazygit() {
         echo "select option for publishing new local commits on a remote server"
         echo "1. Existing Branch"
         echo "2. New Branch"
-        read -p "Please select an option [1/2]: " branchOption
+        read -r "Please select an option [1/2]: " branchOption
         case $branchOption in
         1|e*|E*)
 
@@ -46,7 +46,7 @@ function lazygit() {
             return
             ;;
         [2|n*|N]*)
-            read -p "Enter branch name: " newBranch
+            read -r "Enter branch name: " newBranch
             git checkout -b $newBranch
             git push -u origin $newBranch
             return
@@ -56,7 +56,7 @@ function lazygit() {
 
     else
 
-        read -p "Initialize the local directory as a Git repository? [Y/n]" gitSetup
+        read -r "Initialize the local directory as a Git repository? [Y/n]" gitSetup
         case $gitSetup in
         [Yy]*)
             git init
@@ -68,13 +68,13 @@ function lazygit() {
                 echo "No gobal git configuartion on this system"
                 # steps for adding user details
                 git config --global credential.helper store
-                read -p "Enter your git name:  " gitName
+                read -r "Enter your git name:  " gitName
                 git config --global --add user.name $gitName
-                read -p "Enter your git email: " gitEmail
+                read -r "Enter your git email: " gitEmail
                 git config --global --add user.email $gitEmail
             fi
 
-            read -p "Push to existing Git Repositary. Repo URL? [ex: git@bitbucket.org:USER/REPO.git]" gitRepo
+            read -r "Push to existing Git Repositary. Repo URL? [ex: git@bitbucket.org:USER/REPO.git]" gitRepo
             git remote add origin $gitRepo
             git remote -v
             git add .
