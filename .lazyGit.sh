@@ -19,11 +19,16 @@ function lazygit() {
         git commit --allow-empty -a -m "$*"
         # give user to select/create branch
         echo "select option for publishing new local commits on a remote server"
-        echo "1. Existing Branch"
-        echo "2. New Branch"
-        read -r "Please select an option [1/2]: " branchOption
+        echo "1 Current Branch "+$(git rev-parse --abbrev-ref HEAD)
+        echo "2. Existing Branch"
+        echo "3. New Branch"
+        read -r "Please select an option [1/2/3]: " branchOption
         case $branchOption in
-        1|e*|E*)
+        1|c*|C*)
+             git push -u origin $(git rev-parse --abbrev-ref HEAD)
+             return
+            ;;
+        2|e*|E*)
 
             echo "Loading all local and remote branches..."
             selectedBranch=$(git branch -a | tr -s '*' ' ' | tr -d "[:blank:]" | cut -d/ -f3 | sort -u | select_from_list)
@@ -51,7 +56,7 @@ function lazygit() {
             git push -u origin $newBranch
             return
             ;;
-        *) echo "Please answer 1 or 2." ;;
+        *) echo "Please answer 1, 2 or 3." ;;
         esac
 
     else
