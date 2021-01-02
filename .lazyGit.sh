@@ -23,6 +23,7 @@ function lazygit() {
         echo "2. Existing Branch"
         echo "3. New Branch"
         read -r "Please select an option " branchOption
+        echo $branchOption
         case $branchOption in
         1 | c | C)
             git push -u origin $(git rev-parse --abbrev-ref HEAD)
