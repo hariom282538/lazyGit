@@ -2,7 +2,7 @@
 
 pull() {
     # ------------- Quick Pull -----------------
-    if [[ $(git status --porcelain=v1 2>/dev/null | wc -l) -ge 0 ]]; then
+    if [[ $(git status --porcelain=v1 2>/dev/null | wc -l) -gt 0 ]]; then
         echo "Untracked changes: $(git update-index --refresh)"
         echo "commit[1] or stash[2] changes"
         read -p "Please select an option 1[commit local changes] 2[stash local changes] " cSOption
