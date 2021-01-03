@@ -42,35 +42,34 @@ To https://github.com/hariom282538/aws_s3-upload-utility.git
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 ```
 
-## Case-2 Update/Push existing project
+## Case-2 Push existing project changes to current/other/new branch
 
 ```bash
-HARIOM-MAC:lazyGit HARIOM$ lazygit adding stuff
-Global Git configurations found!
-Configured Git Name:  hariom282538
-[master 41db665] adding stuff
- 3 files changed, 48 insertions(+)
- create mode 100644 README.md
- create mode 100644 logo.svg
- create mode 100644 setup.sh
+HARIOM-MAC:$ lazygit -u readme_updated
+push was triggered, Parameter: readme_updated
+[master acec79a] readme_updated
+ 2 files changed, 30 insertions(+), 17 deletions(-)
 select option for publishing new local commits on a remote server
-1. Existing Branch
-2. New Branch
-Please select an option [1/2]: 1
-Loading all local and remote branches...
-1) master
-2) Quit
-Please select an item: 1
-Branch selected by user: master
-Enumerating objects: 6, done.
-Counting objects: 100% (6/6), done.
+1. Current Branch master
+2. Existing Branch
+3. New Branch
+Please select an option 1
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
 Delta compression using up to 4 threads
-Compressing objects: 100% (5/5), done.
-Writing objects: 100% (5/5), 4.24 KiB | 2.12 MiB/s, done.
-Total 5 (delta 0), reused 0 (delta 0)
-To github.com:hariom282538/lazyGit.git
-   3280c29..41db665  master -> master
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 879 bytes | 879.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/hariom282538/lazyGit.git
+   2ebe557..acec79a  master -> master
 Branch 'master' set up to track remote branch 'master' from 'origin'.
+```
+
+## Case-3 Pull existing project changes from current/other/new remote branch
+
+```bash
+
 ```
 
 # How to run
