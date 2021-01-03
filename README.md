@@ -69,7 +69,26 @@ Branch 'master' set up to track remote branch 'master' from 'origin'.
 ## Case-3 Pull existing project changes from current/other/new remote branch
 
 ```bash
-
+HARIOM-MAC:lazyGit $ lazygit -d
+pull was triggered, Parameter: 
+Untracked changes: .lazyGit.sh: needs update
+commit[1] or stash[2] changes
+Please select an option 1[commit local changes] 2[stash local changes] 1
+[master 5cebcfb] local_changes_commit
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+HARIOM-MAC:lazyGit $ lazygit -d
+pull was triggered, Parameter: 
+select option for pulling new commits from a remote server
+1. Pull Current Branch master
+2. Pull from Existing Other Branch
+3. Pull specific commits [cherry-pick commits]
+Please select an option 1
+From https://github.com/hariom282538/lazyGit
+ * branch            master     -> FETCH_HEAD
+Auto-merging README.md
+Merge made by the 'recursive' strategy.
+ README.md | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 ```
 
 # How to run
