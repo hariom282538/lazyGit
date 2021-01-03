@@ -75,7 +75,7 @@ Branch 'master' set up to track remote branch 'master' from 'origin'.
 
 # How to run
 
-Run this (supports linux/mac only):
+Run this (linux/mac bash-terminal only):
 
 ```bash
 chmod +x setup.sh
