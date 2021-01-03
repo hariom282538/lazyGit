@@ -1,21 +1,65 @@
 #!/bin/bash
 
 pull() {
-    if [[ $(git status --porcelain=v1 2>/dev/null | wc -l) ]]; then
+    # ------------- Quick Pull -----------------
+    if [[ $(git status --porcelain=v1 2>/dev/null | wc -l) -ge 0 ]]; then
         echo "Untracked changes: $(git update-index --refresh)"
-        echo "commit or stash changes"
+        echo "commit[1] or stash[2] changes"
+        read -p "Please select an option 1[commit local changes] 2[stash local changes] " cSOption
+        case $cSOption in
+        1)
+            git add .
+            git commit --allow-empty -a -m "local_changes_commit"
+            return
+            ;;
+        2)
+            git stash push -m "local_changes_stashed"
+            return
+            ;;
+        esac
+
     else
-        echo "go and pull changeas"
-        echo "select option for publishing new local commits on a remote server"
+        echo "select option for pulling new commits from a remote server"
         echo "1. Pull Current Branch $(git rev-parse --abbrev-ref HEAD)"
         echo "2. Pull from Existing Other Branch"
         echo "3. Pull specific commits [cherry-pick commits]"
         read -p "Please select an option " pullOption
+        case $pullOption in
+        1 | c | C)
+            git pull origin $(git rev-parse --abbrev-ref HEAD)
+            return
+            ;;
+        2 | e | E)
+            echo "Loading all local and remote branches..."
+            local selectedBranch=$(git branch -a | tr -s '*' ' ' | tr -d "[:blank:]" | cut -d/ -f3 | sort -u | select_from_list)
+            local STATUS=$?
+            # Check if user selected something
+            if [ $STATUS == 0 ]; then
+                echo "Branch selected by user:" $selectedBranch
+                if [[ $selectedBranch=$(git rev-parse --abbrev-ref HEAD) ]]; then
+                    git pull origin $(git rev-parse --abbrev-ref HEAD)
+                else
+                    git pull origin $selectedBranch
+                fi
+            else
+                echo "Cancelled!"
+            fi
+
+            return
+            ;;
+        3 | cp | CP)
+            cherrypick
+            return
+            ;;
+        *) echo "Please answer 1/c/C, 2/e/E or 3/cp/CP." ;;
+        esac
+
     fi
 
 }
 
 push() {
+    # ------------- Quick Push -----------------
     git add .
     git commit --allow-empty -a -m "$*"
     # give user to select/create branch
@@ -43,7 +87,7 @@ push() {
                 commitedCodeBranch=$(git rev-parse --abbrev-ref HEAD)
                 git checkout $selectedBranch
                 git merge $commitedCodeBranch
-                git push -U origin $selectedBranch
+                git push -u origin $selectedBranch
             fi
         else
             echo "Cancelled!"
@@ -63,8 +107,42 @@ push() {
 }
 
 cherrypick() {
-    echo "cherrypick"
-
+    # ------------- Quick cherry-pick -----------------
+    read -p "Please provide space-seprated commit ids ex. ("34cea36zzz" "18cc3c8zzz" "e8637dfzzz")" commitID
+    declare -a commitsArray=$commitID
+    local arraylength=${#commitsArray[@]}
+    declare cherryPickBranch=cherryPick-$(git rev-parse --abbrev-ref HEAD)-$(date "+%Y.%m.%d-%H.%M.%S")
+    git checkout -b $cherryPickBranch
+    # use for loop to read all values of commits
+    for ((i = ${arraylength}; i > 0; i--)); do
+        echo $i " / " ${arraylength} " : " ${commitsArray[$i - 1]}
+        local rawHash=${commitsArray[$i - 1]}
+        local hash=${rawHash:0:7}
+        printf "cherry picking ${hash} ...\n"
+        local read_status=$(git cherry-pick -x "${hash}" 2>&1)
+        local empty_message="The previous cherry-pick is now empty"
+        local error_message="error: cherry-pick is not possible because you have unmerged files"
+        local online_edited="edited online with Bitbucket"
+        if [[ $read_status = *"$online_edited"* ]]; then
+            echo $read_status
+            exit 0
+        elif [[ $read_status = *"$error_message"* ]]; then
+            echo $read_status
+            exit 0
+        elif [[ $read_status = *"$empty_message"* ]]; then
+            echo yes
+            git commit --allow-empty -m "${hash} empty"
+        else
+            echo no
+            if [ $? -eq 0 ]; then
+                echo "$hash - cherry-picked"
+            else
+                echo "There are conflicts to resolve!"
+                exit 0
+            fi
+        fi
+    done
+    git push -u origin $cherryPickBranch
 }
 
 show() {
@@ -181,7 +259,7 @@ function lazygit() {
             ;;
         u)
             echo "push was triggered, Parameter: $OPTARG" >&2
-            push
+            push $OPTARG
             ;;
         s)
             echo "show was triggered, Parameter: $OPTARG" >&2
