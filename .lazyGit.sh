@@ -248,6 +248,7 @@ select_from_list() {
 }
 
 function lazygit() {
+    if [ -d .git ]; then
     declare opt
     declare OPTARG
     declare OPTIND
@@ -275,4 +276,7 @@ function lazygit() {
             ;;
         esac
     done
+    else
+    init
+    fi
 }

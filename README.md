@@ -11,29 +11,38 @@ Add, commit and push, Three mostly used commands by me when I made any change in
 ## Case-1 Push new project 
 
 ```bash
-HARIOM-MAC:lazyGit HARIOM$ lazygit init
+HARIOM-MAC:$ lazygit first_commit_msg
 Initialize the local directory as a Git repository? [Y/n]y
-Initialized empty Git repository in /Users/HARIOM/devops/lazyGit/.git/
-Global Git configurations found!
-Configured Git Name:  hariom282538
-Push to existing Git Repositary. Repo URL? [ex: git@bitbucket.org:USER/REPO.git]git@github.com:hariom282538/lazyGit.git
-origin	git@github.com:hariom282538/lazyGit.git (fetch)
-origin	git@github.com:hariom282538/lazyGit.git (push)
-[master (root-commit) 3280c29] init
- 1 file changed, 127 insertions(+)
- create mode 100755 .lazyGit.sh
-Enumerating objects: 3, done.
-Counting objects: 100% (3/3), done.
+Initialized empty Git repository in /Users/b0212006/devops/aws_s3-upload-utility/.git/
+Git configurations found!
+Configured Git Name: Hariom Vashisth
+Configured Git Email: accoun2@gmail.com
+Wanted to change? [Y/n]y
+Global(system level) or Local(project level)? [G/l]l
+Enter your git name:  hariom282538
+Enter your git email: account1@gmail.com
+Push to existing Git Repositary. Repo URL? [ex: git@bitbucket.org:USER/REPO.git]https://github.com/hariom282538/aws_s3-upload-utility.git
+origin  https://github.com/hariom282538/aws_s3-upload-utility.git (fetch)
+origin  https://github.com/hariom282538/aws_s3-upload-utility.git (push)
+[master (root-commit) beed54a] first_commit_msg
+ 5 files changed, 365 insertions(+)
+ create mode 100644 CODE_OF_CONDUCT.md
+ create mode 100644 LICENSE
+ create mode 100644 README.md
+ create mode 100644 aws-s3-bucket.svg
+ create mode 100644 fileUpload.sh
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
 Delta compression using up to 4 threads
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (3/3), 1.46 KiB | 1.46 MiB/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-To github.com:hariom282538/lazyGit.git
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 6.98 KiB | 2.33 MiB/s, done.
+Total 7 (delta 0), reused 0 (delta 0)
+To https://github.com/hariom282538/aws_s3-upload-utility.git
  * [new branch]      master -> master
 Branch 'master' set up to track remote branch 'master' from 'origin'.
 ```
 
-## Case-2 Update existing project
+## Case-2 Update/Push existing project
 
 ```bash
 HARIOM-MAC:lazyGit HARIOM$ lazygit adding stuff
