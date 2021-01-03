@@ -10,11 +10,9 @@ pull() {
         1)
             git add .
             git commit --allow-empty -a -m "local_changes_commit"
-            return
             ;;
         2)
             git stash push -m "local_changes_stashed"
-            return
             ;;
         esac
 
@@ -162,10 +160,8 @@ init() {
             case $gitConfigChange in
             [Yy]*)
                 config
-                return
                 ;;
             [Nn]*)
-                return
                 ;;
             esac
 
@@ -252,7 +248,7 @@ function lazygit() {
     declare opt
     declare OPTARG
     declare OPTIND
-    while getopts ":uds" opt; do
+    while getopts ":u:ds" opt; do
         case $opt in
         d)
             echo "pull was triggered, Parameter: $OPTARG" >&2
@@ -268,15 +264,15 @@ function lazygit() {
             ;;
         \?)
             echo "Invalid option: -$OPTARG" >&2
-            exit 1
+            exit 0
             ;;
         :)
             echo "Option -$OPTARG requires an argument." >&2
-            exit 1
+            exit 0
             ;;
         esac
     done
     else
-    init
+    init $*
     fi
 }
