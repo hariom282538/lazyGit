@@ -1,18 +1,18 @@
 #!/bin/bash
 
 pull() {
-
-    if [ $(git status --porcelain=v1 2>/dev/null | wc -l) ] >=1; then
+    if [[ $(git status --porcelain=v1 2>/dev/null | wc -l) ]]; then
         echo "Untracked changes: $(git update-index --refresh)"
         echo "commit or stash changes"
     else
         echo "go and pull changeas"
+        echo "select option for publishing new local commits on a remote server"
+        echo "1. Pull Current Branch $(git rev-parse --abbrev-ref HEAD)"
+        echo "2. Pull from Existing Other Branch"
+        echo "3. Pull specific commits [cherry-pick commits]"
+        read -p "Please select an option " pullOption
     fi
-    echo "select option for publishing new local commits on a remote server"
-    echo "1. Pull Current Branch $(git rev-parse --abbrev-ref HEAD)"
-    echo "2. Pull from Existing Other Branch"
-    echo "3. Pull specific commits [cherry-pick commits]"
-    read -p "Please select an option " pullOption
+
 }
 
 push() {
@@ -170,9 +170,10 @@ select_from_list() {
 }
 
 function lazygit() {
-    options_found=0
+    declare opt
+    declare OPTARG
+    declare OPTIND
     while getopts ":uds" opt; do
-        options_found=1
         case $opt in
         d)
             echo "pull was triggered, Parameter: $OPTARG" >&2
@@ -196,16 +197,4 @@ function lazygit() {
             ;;
         esac
     done
-
-    if ((!options_found)); then
-        echo "no options found"
-    fi
-
 }
-
-unset -f pull
-unset -f push
-unset -f gitConfigChangeinit
-unset -f show
-unset -f cherrypick
-unset -f select_from_list
