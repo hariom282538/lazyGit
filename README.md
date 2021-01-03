@@ -99,6 +99,31 @@ Run this (linux/mac bash-terminal only):
 chmod +x setup.sh
 ./setup.sh
 ```
+or
+```bash
+    cp .lazyGit.sh ~/
+    echo 'source ~/.lazyGit.sh' >>~/.bashrc
+    source ~/.bashrc
+```
+
+## Use
+```bash
+lazygit -u commit_msg # u stands for upload[push] changes
+lazygit -d # d stands for download[pull] changes
+lazygit commit_msg # for setting-up new projects
+```
+
+### Features
+
+- Pull
+   - Current branch
+   - Existing other branches
+   - Cherry-pick
+
+- Push
+   - Current branch
+   - Existing other branches
+   - New branch
 
 ##### The purpose of these script is to simplify daily git operations for programmers/DevOps. 
 
