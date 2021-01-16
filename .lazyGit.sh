@@ -9,51 +9,58 @@ pull() {
         case $cSOption in
         1)
             git add .
-            git commit --allow-empty -a -m "local_changes_commit"
+            read -p "Please provide your git commit message" gitcmsg
+            git commit --allow-empty -a -m $gitcmsg
+            pullRemoteBranch
             ;;
         2)
-            git stash push -m "local_changes_stashed"
+            read -p "Please provide your git stash message" gitcmsg
+            git stash push -m $gitcmsg
+            pullRemoteBranch
             ;;
         esac
 
     else
-        echo "select option for pulling new commits from a remote server"
-        echo "1. Pull Current Branch $(git rev-parse --abbrev-ref HEAD)"
-        echo "2. Pull from Existing Other Branch"
-        echo "3. Pull specific commits [cherry-pick commits]"
-        read -p "Please select an option " pullOption
-        case $pullOption in
-        1 | c | C)
-            git pull origin $(git rev-parse --abbrev-ref HEAD)
-            return
-            ;;
-        2 | e | E)
-            echo "Loading all local and remote branches..."
-            local selectedBranch=$(git branch -a | tr -s '*' ' ' | tr -d "[:blank:]" | cut -d/ -f3 | sort -u | select_from_list)
-            local STATUS=$?
-            # Check if user selected something
-            if [ $STATUS == 0 ]; then
-                echo "Branch selected by user:" $selectedBranch
-                if [[ $selectedBranch=$(git rev-parse --abbrev-ref HEAD) ]]; then
-                    git pull origin $(git rev-parse --abbrev-ref HEAD)
-                else
-                    git pull origin $selectedBranch
-                fi
-            else
-                echo "Cancelled!"
-            fi
-
-            return
-            ;;
-        3 | cp | CP)
-            cherrypick
-            return
-            ;;
-        *) echo "Please answer 1/c/C, 2/e/E or 3/cp/CP." ;;
-        esac
-
+        pullRemoteBranch
     fi
 
+}
+
+pullRemoteBranch() {
+    echo "select option for pulling new commits from a remote server"
+    echo "1. Pull Current Branch $(git rev-parse --abbrev-ref HEAD)"
+    echo "2. Pull from Existing Other Branch"
+    echo "3. Pull specific commits [cherry-pick commits]"
+    read -p "Please select an option " pullOption
+    case $pullOption in
+    1 | c | C)
+        git pull origin $(git rev-parse --abbrev-ref HEAD)
+        return
+        ;;
+    2 | e | E)
+        echo "Loading all local and remote branches..."
+        local selectedBranch=$(git branch -a | tr -s '*' ' ' | tr -d "[:blank:]" | cut -d/ -f3 | sort -u | select_from_list)
+        local STATUS=$?
+        # Check if user selected something
+        if [ $STATUS == 0 ]; then
+            echo "Branch selected by user:" $selectedBranch
+            if [[ $selectedBranch=$(git rev-parse --abbrev-ref HEAD) ]]; then
+                git pull origin $(git rev-parse --abbrev-ref HEAD)
+            else
+                git pull origin $selectedBranch
+            fi
+        else
+            echo "Cancelled!"
+        fi
+
+        return
+        ;;
+    3 | cp | CP)
+        cherrypick
+        return
+        ;;
+    *) echo "Please answer 1/c/C, 2/e/E or 3/cp/CP." ;;
+    esac
 }
 
 push() {
@@ -144,7 +151,8 @@ cherrypick() {
 }
 
 show() {
-    echo "show"
+    selectedCommit=$(git log -n 10 --oneline --pretty="format:%h:%s:%ce:%ci" | select_from_list)
+    git diff-tree --no-commit-id --name-only -r $($selectedCommit | cut -d: -f1)
 }
 
 init() {
@@ -161,8 +169,8 @@ init() {
             [Yy]*)
                 config
                 ;;
-            [Nn]*)
-                ;;
+            [Nn]*) ;;
+
             esac
 
         else
@@ -245,34 +253,34 @@ select_from_list() {
 
 function lazygit() {
     if [ -d .git ]; then
-    declare opt
-    declare OPTARG
-    declare OPTIND
-    while getopts ":u:ds" opt; do
-        case $opt in
-        d)
-            echo "pull was triggered, Parameter: $OPTARG" >&2
-            pull
-            ;;
-        u)
-            echo "push was triggered, Parameter: $OPTARG" >&2
-            push $OPTARG
-            ;;
-        s)
-            echo "show was triggered, Parameter: $OPTARG" >&2
-            show
-            ;;
-        \?)
-            echo "Invalid option: -$OPTARG" >&2
-            exit 0
-            ;;
-        :)
-            echo "Option -$OPTARG requires an argument." >&2
-            exit 0
-            ;;
-        esac
-    done
+        declare opt
+        declare OPTARG
+        declare OPTIND
+        while getopts ":u:ds" opt; do
+            case $opt in
+            d)
+                echo "pull was triggered, Parameter: $OPTARG" >&2
+                pull
+                ;;
+            u)
+                echo "push was triggered, Parameter: $OPTARG" >&2
+                push $OPTARG
+                ;;
+            s)
+                echo "show was triggered, Parameter: $OPTARG" >&2
+                show
+                ;;
+            \?)
+                echo "Invalid option: -$OPTARG" >&2
+                exit 0
+                ;;
+            :)
+                echo "Option -$OPTARG requires an argument." >&2
+                exit 0
+                ;;
+            esac
+        done
     else
-    init $*
+        init $*
     fi
 }
