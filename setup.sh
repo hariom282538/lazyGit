@@ -18,10 +18,10 @@ echo what\'s your operating system?
 echo 1. Linux
 echo 2. Mac
 read os
-if [[ $os == "1" || $os == "mac" ]]; then
-    macSetup
-elif [[ $os == "2" || $os == "linux" ]]; then
+if [[ $os == "1" || $os == "linux" ]]; then
     linuxSetup
+elif [[ $os == "2" || $os == "mac" ]]; then
+    macSetup
 else
     echo wrong input!
 
