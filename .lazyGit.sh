@@ -28,7 +28,7 @@ pull() {
 
 pullRemoteBranch() {
     echo "select option for pulling new commits from a remote server"
-    echo "1. Pull Current Branch $(git rev-parse --abbrev-ref HEAD)"
+    echo "1. Pull Current Branch --> $(git rev-parse --abbrev-ref HEAD)"
     echo "2. Pull from Existing Other Branch"
     echo "3. Pull specific commits [cherry-pick commits]"
     read -p "Please select an option " pullOption
