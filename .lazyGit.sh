@@ -28,7 +28,7 @@ pull() {
 
 pullRemoteBranch() {
     echo "select option for pulling new commits from a remote server"
-    echo "1. Pull Current Branch --> $(git rev-parse --abbrev-ref HEAD)"
+    echo "1. Pull Current Branch $(git rev-parse --abbrev-ref HEAD)"
     echo "2. Pull from Existing Other Branch"
     echo "3. Pull specific commits [cherry-pick commits]"
     read -p "Please select an option " pullOption
@@ -72,7 +72,7 @@ push() {
     echo "1. Current Branch $(git rev-parse --abbrev-ref HEAD)"
     echo "2. Existing Branch"
     echo "3. New Branch"
-    echo "Please select an option " read branchOption
+    read -p "Please select an option " branchOption
 
     case $branchOption in
     1 | c | C)
