@@ -73,7 +73,7 @@ push() {
     echo "2. Existing Branch"
     echo "3. New Branch"
     read -rs -q  "Please select an option " branchOption
-
+    echo "selected option:" $branchOption
     case $branchOption in
     1 | c | C)
         git push -u origin $(git rev-parse --abbrev-ref HEAD)
