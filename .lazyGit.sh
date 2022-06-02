@@ -5,16 +5,19 @@ pull() {
     if [[ $(git status --porcelain=v1 2>/dev/null | wc -l) -gt 0 ]]; then
         echo "Untracked changes: $(git update-index --refresh)"
         echo "commit[1] or stash[2] changes"
-        read -p "Please select an option 1[commit local changes] 2[stash local changes] " cSOption
+        printf '%s ' "Please select an option 1[commit local changes] 2[stash local changes] " 
+        read cSOption
         case $cSOption in
         1)
             git add .
-            read -p "Please provide your git commit message" gitcmsg
+            printf '%s ' "Please provide your git commit message" 
+            read gitcmsg
             git commit --allow-empty -a -m $gitcmsg
             pullRemoteBranch
             ;;
         2)
-            read -p "Please provide your git stash message" gitcmsg
+            printf '%s ' "Please provide your git stash message" 
+            read gitcmsg
             git stash push -m $gitcmsg
             pullRemoteBranch
             ;;
@@ -31,7 +34,8 @@ pullRemoteBranch() {
     echo "1. Pull Current Branch $(git rev-parse --abbrev-ref HEAD)"
     echo "2. Pull from Existing Other Branch"
     echo "3. Pull specific commits [cherry-pick commits]"
-    read -p "Please select an option " pullOption
+    printf '%s ' "Please select an option " 
+    read pullOption
     case $pullOption in
     1 | c | C)
         git pull origin $(git rev-parse --abbrev-ref HEAD)
@@ -74,7 +78,7 @@ push() {
     echo "3. New Branch"
     printf '%s ' "Please select an option " 
     read branchOption
-    echo "selected option:" $branchOption
+
     case $branchOption in
     1 | c | C)
         git push -u origin $(git rev-parse --abbrev-ref HEAD)
@@ -102,7 +106,8 @@ push() {
         return
         ;;
     3 | n | N)
-        read -p "Enter branch name: " newBranch
+        printf '%s ' "Enter branch name: " 
+        read newBranch
         git checkout -b $newBranch
         git push -u origin $newBranch
         return
@@ -114,7 +119,8 @@ push() {
 
 cherrypick() {
     # ------------- Quick cherry-pick -----------------
-    read -p "Please provide space-seprated commit ids ex. ("34cea36zzz" "18cc3c8zzz" "e8637dfzzz")" commitID
+    printf '%s ' "Please provide space-seprated commit ids ex. ("34cea36zzz" "18cc3c8zzz" "e8637dfzzz")" 
+    read commitID
     declare -a commitsArray=$commitID
     local arraylength=${#commitsArray[@]}
     declare cherryPickBranch=cherryPick-$(git rev-parse --abbrev-ref HEAD)-$(date "+%Y.%m.%d-%H.%M.%S")
@@ -165,7 +171,8 @@ init() {
             echo "Git configurations found!"
             echo "Configured Git Name: $(git config user.name)"
             echo "Configured Git Email: $(git config user.email)"
-            read -p "Wanted to change? [Y/n]" gitConfigChange
+            printf '%s '"Wanted to change? [Y/n]" 
+            read gitConfigChange
             case $gitConfigChange in
             [Yy]*)
                 config
@@ -179,7 +186,8 @@ init() {
             config
         fi
 
-        read -p "Push to existing Git Repositary. Repo URL? [ex: git@bitbucket.org:USER/REPO.git]" gitRepo
+        printf '%s ' "Push to existing Git Repositary. Repo URL? [ex: git@bitbucket.org:USER/REPO.git]" 
+        read gitRepo
         git remote add origin $gitRepo
         git remote -v
         git add .
@@ -193,21 +201,26 @@ init() {
 }
 
 config() {
-    read -p "Global(system level) or Local(project level)? [G/l]" gitConfigSetup
+    printf '%s ' "Global(system level) or Local(project level)? [G/l]" 
+    read gitConfigSetup
     case $gitConfigSetup in
     [Gg]*)
         git config --global credential.helper store
-        read -p "Enter your git name:  " gitName
+        printf '%s ' "Enter your git name:  " 
+        read gitName
         git config --global --add user.name $gitName
-        read -p "Enter your git email: " gitEmail
+        printf '%s ' "Enter your git email: " 
+        read gitEmail
         git config --global --add user.email $gitEmail
         return
         ;;
     [Ll]*)
         git config --local credential.helper store
-        read -p "Enter your git name:  " gitName
+        printf '%s ' "Enter your git name:  " 
+        read gitName
         git config --local --add user.name $gitName
-        read -p "Enter your git email: " gitEmail
+        printf '%s '"Enter your git email: " 
+        read gitEmail
         git config --local --add user.email $gitEmail
         return
         ;;
@@ -222,7 +235,8 @@ select_from_list() {
     if [ -z "$1" ]; then
         # Get options from PIPE
         input=$(cat /dev/stdin)
-        while read -p line; do
+        while read line; do
+            echo $line
             options+=("$line")
         done <<<"$input"
     else
