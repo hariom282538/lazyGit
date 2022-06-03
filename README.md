@@ -93,7 +93,7 @@ Merge made by the 'recursive' strategy.
 
 ## Case-4 Show modified files in selected commit
 
-bash```
+```bash
 HARIOM-MAC:lazyGit $ lazygit -s 
 show was triggered, Parameter: 
 1) 96e4aa2:prompt_msg_updated:hariom.devops@gmail.com:2022-06-03 16:51:37 +0530                                                                                                                
