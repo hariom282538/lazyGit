@@ -91,6 +91,27 @@ Merge made by the 'recursive' strategy.
  1 file changed, 2 insertions(+), 2 deletions(-)
 ```
 
+## Case-4 Pull existing project changes from current/other/new remote branch
+
+bash```
+HARIOM-MAC:lazyGit $ lazygit -s 
+show was triggered, Parameter: 
+1) 96e4aa2:prompt_msg_updated:hariom.devops@gmail.com:2022-06-03 16:51:37 +0530                                                                                                                
+2) a5f5313:readme-updated:hariom.devops@gmail.com:2022-06-03 16:50:31 +0530                                                                                                                    
+3) 6b45b8f:compatibility_with_new_mac_upgrades:hariom.devops@gmail.com:2022-06-03 16:44:15 +0530                                                                                               
+4) df33155:c1:hariom.devops@gmail.com:2022-06-02 20:00:30 +0530                                                                                                                                
+5) e288f27:c1:hariom.devops@gmail.com:2022-06-02 19:43:47 +0530                                                                                                                                
+6) a8b1a18:c1:hariom.devops@gmail.com:2022-06-02 19:43:16 +0530                                                                                                                                
+7) e8ee31a:c1:hariom.devops@gmail.com:2022-06-02 19:42:16 +0530                                                                                                                                
+8) 370109d:c1:hariom.devops@gmail.com:2022-06-02 19:41:37 +0530                                                                                                                                
+9) 4cf93dc:c1:hariom.devops@gmail.com:2022-06-02 19:40:39 +0530                                                                                                                                
+10) 3f27147:c1:hariom.devops@gmail.com:2022-06-02 19:39:43 +0530                                                                                                                               
+11) Quit                                                                                                                                                                                       
+Please select an item: 2
+Modified Files: a5f5313
+README.md                                                                                                                               
+```
+
 # How to run
 
 Run this (linux/mac bash-terminal only):
