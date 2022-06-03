@@ -159,7 +159,7 @@ cherrypick() {
 
 show() {
     selectedCommit=$(git log -n 10 --oneline --pretty="format:%h:%s:%ce:%ci" | select_from_list)
-    git diff-tree --no-commit-id --name-only -r $($selectedCommit | cut -d: -f1)
+    git diff-tree --no-commit-id --name-only -r $(echo "$selectedCommit" | cut -d: -f1)
 }
 
 init() {
@@ -230,13 +230,13 @@ config() {
 select_from_list() {
     prompt="Please select an item:"
 
-    options=()
+    local -a options=()
 
     if [ -z "$1" ]; then
         # Get options from PIPE
         input=$(cat /dev/stdin)
+
         while read line; do
-            echo $line
             options+=("$line")
         done <<<"$input"
     else
@@ -247,7 +247,8 @@ select_from_list() {
     fi
 
     # Close stdin
-    0<&-
+    # 0<&-
+
     # open /dev/tty as stdin
     exec 0</dev/tty
 

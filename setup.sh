@@ -9,7 +9,9 @@ linuxSetup() {
 macSetup() {
     cp .lazyGit.sh ~/
     echo 'source ~/.lazyGit.sh' >>~/.bash_profile
+    echo 'source ~/.lazyGit.sh' >>~/.zshrc
     source ~/.bash_profile
+    source ~/.zshrc
 }
 
 # Ask the user for their os
