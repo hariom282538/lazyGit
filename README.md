@@ -108,8 +108,9 @@ or
 
 ## Use
 ```bash
-lazygit -u commit_msg # u stands for upload[push] changes
-lazygit -d # d stands for download[pull] changes
+lazygit -u commit_msg # [u]:stands for upload[push] changes
+lazygit -d # [d]:stands for download[pull] changes
+lazygit -s # [s]:it shows files modified in selected commits
 lazygit commit_msg # for setting-up new projects
 ```
 
@@ -124,6 +125,10 @@ lazygit commit_msg # for setting-up new projects
    - Current branch
    - Existing other branches
    - New branch
+
+- Show
+   - easy way to get commit details
+   - easy way to see modified files in specific commit without knowing the commit-id
 
 ##### The purpose of these script is to simplify daily git operations for programmers/DevOps. 
 
