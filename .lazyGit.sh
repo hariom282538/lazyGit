@@ -73,7 +73,7 @@ push() {
     git commit --allow-empty -a -m "$*"
     # give user to select/create branch
     echo "select option for publishing new local commits on a remote server"
-    echo "1. Current Branch $(git rev-parse --abbrev-ref HEAD)"
+    echo "1. Current Branch: $(git rev-parse --abbrev-ref HEAD)"
     echo "2. Existing Branch"
     echo "3. New Branch"
     printf '%s ' "Please select an option " 
