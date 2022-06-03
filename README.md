@@ -91,7 +91,7 @@ Merge made by the 'recursive' strategy.
  1 file changed, 2 insertions(+), 2 deletions(-)
 ```
 
-## Case-4 Pull existing project changes from current/other/new remote branch
+## Case-4 Show modified files in selected commit
 
 bash```
 HARIOM-MAC:lazyGit $ lazygit -s 

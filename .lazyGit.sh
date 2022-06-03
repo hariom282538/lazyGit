@@ -159,7 +159,7 @@ cherrypick() {
 
 show() {
     selectedCommit=$(git log -n 10 --oneline --pretty="format:%h:%s:%ce:%ci" | select_from_list)
-    printf "Modified Files in selected commit-id: $selectedCommit \n"
+    printf "Modified Files in selected commit-id:" echo "$selectedCommit" | cut -d: -f1"
     git diff-tree --no-commit-id --name-only -r $(echo "$selectedCommit" | cut -d: -f1)
 }
 
