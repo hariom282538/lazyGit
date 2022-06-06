@@ -159,12 +159,13 @@ cherrypick() {
 
 show() {
     selectedCommit=$(git log -n 10 --oneline --pretty="format:%h:%s:%ce:%ci" | select_from_list)
-    printf "Modified Files in selected commit-id:" echo "$selectedCommit" | cut -d: -f1"
+    printf "Modified files in the selected commit: \n" 
     git diff-tree --no-commit-id --name-only -r $(echo "$selectedCommit" | cut -d: -f1)
 }
 
 init() {
-    read -p "Initialize the local directory as a Git repository? [Y/n]" gitSetup
+    printf '%s ' "Initialize the local directory as a Git repository? [Y/n]" 
+    read gitSetup
     case $gitSetup in
     [Yy]*)
         git init
